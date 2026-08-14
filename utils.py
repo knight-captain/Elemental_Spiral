@@ -1,3 +1,4 @@
+import numpy as np
 from config import ANCHOR_GROUP
 
 def is_bounded_segment(elements, segment):
@@ -9,43 +10,6 @@ def is_bounded_segment(elements, segment):
         return False
 
     return True
-
-def is_last_turn(segments, segment_index):
-    return segment_index == len(segments) - 1
-
-def last_turn_bounded(segment, elements, ANCHOR_GROUP):
-    """
-    Determine whether the final turn (segment) is bounded by an anchor.
-
-    A segment is bounded if its last element belongs to the anchor group.
-    Otherwise it is unbounded.
-
-    Parameters
-    ----------
-    segment : list[int]
-        Atomic numbers in the segment (turn).
-    elements : list[dict]
-        Full element metadata list.
-    ANCHOR_GROUP : int or None
-        The group number that defines the anchor.
-
-    Returns
-    -------
-    bool
-        True  → last turn is bounded by anchor
-        False → last turn is unbounded
-    """
-
-    if not segment:
-        return False
-
-    last_Z = segment[-1]
-
-    # Find the element metadata
-    elem = next(e for e in elements if e["atomic_number"] == last_Z)
-
-    # If the last element's group matches the anchor group → bounded
-    return elem["group"] == ANCHOR_GROUP
 
 def is_anchor(element):
     """
@@ -96,3 +60,14 @@ def compute_segments(ordered):
 
     return segments
 
+def find_ideal_spacing(segment):
+    """
+    Compute ideal angular spacing for a segment (turn).
+    - Normal turn: d_ideal = 2π / len(segment)
+    """
+    count = len(segment)
+    
+    d_ideal = (2 * np.pi) / count if count > 1 else 0.0
+
+    # Fallback
+    return d_ideal

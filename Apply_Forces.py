@@ -10,19 +10,6 @@ def circ_diff(a, b):
         d -= 2*np.pi
     return d
 
-
-def find_ideal_spacing(segment):
-    """
-    Compute ideal angular spacing for a segment (turn).
-    - Normal turn: d_ideal = 2π / len(segment)
-    """
-    count = len(segment)
-    
-    d_ideal = (2 * np.pi) / count if count > 1 else 0.0
-
-    # Fallback
-    return d_ideal
-
 def spring_force(Z, positions, d_ideal, REPULSION_WEIGHT, eps=1e-4):
     """
     Compute tangential spring force for element Z based on ideal spacing.

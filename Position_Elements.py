@@ -1,16 +1,15 @@
 import numpy as np
 
-# --- Config ---
 from config import (
     SPIRAL_START_ANGLE,
     STEP,
     REPULSION_WEIGHT,
+    SPRING_GRATIENT,
     ATTRACTION_WEIGHT
     )
 
-# --- Utils ---
 from utils import *
-from Apply_Forces import *
+from Apply_Forces import spring_force, nearest_neighbor_attraction
 
 def relax_spiral(elements, positions):
     """
@@ -59,7 +58,12 @@ def relax_spiral(elements, positions):
             Ft = 0.0
 
             # 1. Spring force (repulsion + attraction) towards evenly spacing elements around each segment
-            Ft += spring_force(Z, positions, d_ideal, REPULSION_WEIGHT)
+            raw_spring = spring_force(Z, positions, d_ideal, REPULSION_WEIGHT)
+            if SPRING_GRATIENT > 0:
+                gradient = SPRING_GRATIENT / len(segment)
+            else:
+                gradient = 1
+            Ft += raw_spring * gradient
 
             # 2. Group attraction
             Ft += nearest_neighbor_attraction(Z, positions, elements, ATTRACTION_WEIGHT)

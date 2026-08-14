@@ -9,6 +9,7 @@ ANCHOR_ANGLE = np.pi / 2 #what to orient the anchor group to
 
 # Force weights
 REPULSION_WEIGHT = 1
+SPRING_GRATIENT = 32 # how much weaker do you want the spring force to be for outer elements; 0 = no gradient
 ATTRACTION_WEIGHT = 50
 
 # Drawing & Force weights

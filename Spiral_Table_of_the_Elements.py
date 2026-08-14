@@ -20,7 +20,7 @@ def load_elements(csv_path: PathlibPath):
             atomic_number = int(row["AtomicNumber"])
             atomic_name = row.get("AtomicName") or row.get("Name")
             group = float(row.get("Group", "")) if str(row.get("Group", "")).strip() else None
-            starter_angle = float(row.get("angle", 0.0))
+            starter_angle = float(row.get("angle", 0.0)) #artifact of older system
             rows.append({
                 "atomic_number": atomic_number,
                 "atomic_name": atomic_name,
